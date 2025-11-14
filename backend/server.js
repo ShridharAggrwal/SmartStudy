@@ -5,7 +5,7 @@
 
 import express from 'express';
 import dotenv from 'dotenv';
-import { corsConfig } from './middleware/cors.js';
+import { corsConfig, corsHeaders } from './middleware/cors.js';
 import { requestLogger } from './middleware/logger.js';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 import { initializeGeminiConfig } from './config/gemini.js';
@@ -21,8 +21,9 @@ const PORT = process.env.PORT || 3000;
 // Initialize Gemini AI
 initializeGeminiConfig(process.env.GEMINI_API_KEY);
 
-// Middleware
-app.use(corsConfig);
+// Middleware - CORS must be first
+app.use(corsHeaders); // Manual CORS headers (fallback)
+app.use(corsConfig);  // CORS package middleware
 app.use(express.json());
 app.use(requestLogger);
 

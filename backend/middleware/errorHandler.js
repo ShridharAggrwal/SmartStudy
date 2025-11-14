@@ -11,6 +11,25 @@ export const errorHandler = (err, req, res, next) => {
     return next(err);
   }
 
+  // Ensure CORS headers are set on error responses
+  const origin = req.headers.origin;
+  const allowedOrigins = [
+    "https://smartstudying.netlify.app",
+    "http://localhost:5173"
+  ];
+  
+  if (!origin || allowedOrigins.includes(origin) || origin?.includes('localhost') || origin?.includes('127.0.0.1')) {
+    // Use specific origin when credentials are used
+    if (origin) {
+      res.header('Access-Control-Allow-Origin', origin);
+      res.header('Access-Control-Allow-Credentials', 'true');
+    } else {
+      res.header('Access-Control-Allow-Origin', '*');
+    }
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  }
+
   // Default error response
   res.status(err.status || 500).json({
     error: err.name || 'Internal Server Error',
@@ -23,6 +42,25 @@ export const errorHandler = (err, req, res, next) => {
  * 404 Not Found handler
  */
 export const notFoundHandler = (req, res) => {
+  // Ensure CORS headers are set on 404 responses
+  const origin = req.headers.origin;
+  const allowedOrigins = [
+    "https://smartstudying.netlify.app",
+    "http://localhost:5173"
+  ];
+  
+  if (!origin || allowedOrigins.includes(origin) || origin?.includes('localhost') || origin?.includes('127.0.0.1')) {
+    // Use specific origin when credentials are used
+    if (origin) {
+      res.header('Access-Control-Allow-Origin', origin);
+      res.header('Access-Control-Allow-Credentials', 'true');
+    } else {
+      res.header('Access-Control-Allow-Origin', '*');
+    }
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  }
+
   res.status(404).json({
     error: 'Not Found',
     message: 'The requested endpoint does not exist',
