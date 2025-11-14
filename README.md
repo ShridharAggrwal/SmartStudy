@@ -24,6 +24,7 @@ An AI-powered full-stack web application that helps students learn smarter by pr
 
 ### Backend
 - **Node.js** with Express
+- **Modular Architecture** with routes, controllers, and middleware
 - **Gemini AI** (Google's generative AI)
 - **Wikipedia API** for topic information
 - **CORS** enabled for cross-origin requests
@@ -385,10 +386,22 @@ These prompts demonstrate how AI assistance was used specifically for frontend d
 ```
 SmartStudy/
 ├── backend/
+│   ├── config/
+│   │   └── gemini.js              # Gemini AI initialization
+│   ├── controllers/
+│   │   ├── homeController.js      # Home/health check controller
+│   │   └── studyController.js     # Study endpoint controller
+│   ├── middleware/
+│   │   ├── cors.js                # CORS configuration
+│   │   ├── errorHandler.js        # Error handling middleware
+│   │   └── logger.js              # Request logging middleware
+│   ├── routes/
+│   │   ├── index.js               # Main routes (combines all routes)
+│   │   └── studyRoutes.js         # Study-related routes
 │   ├── services/
 │   │   ├── wikipediaService.js    # Wikipedia API integration
 │   │   └── geminiService.js       # Gemini AI integration
-│   ├── server.js                  # Express server & API endpoints
+│   ├── server.js                  # Express server setup & startup
 │   ├── package.json
 │   ├── render.yaml                # Render deployment config
 │   └── .env.example
