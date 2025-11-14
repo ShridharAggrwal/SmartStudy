@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { FaMoon, FaSun } from 'react-icons/fa';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import StudyForm from './components/StudyForm';
@@ -124,6 +125,50 @@ function App() {
       {/* Main Content */}
       <main className="flex-1 max-w-4xl mx-auto px-4 py-8 w-full">
         <StudyForm onSubmit={handleStudyRequest} isLoading={isLoading} />
+
+        {!studyData && !isLoading && !error && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="card mb-6"
+            style={{
+              backgroundColor: darkMode ? '#1f2937' : '#ffffff',
+              border: `2px solid ${darkMode ? '#3b82f6' : '#3b82f6'}`,
+              borderStyle: 'dashed'
+            }}
+          >
+            <div className="flex items-start">
+              <div className="flex-shrink-0 mr-4">
+                <svg className="w-6 h-6" style={{ color: darkMode ? '#60a5fa' : '#2563eb' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold mb-2" style={{ color: darkMode ? '#f9fafb' : '#111827' }}>
+                  Important Information
+                </h3>
+                <div className="space-y-2 text-sm" style={{ color: darkMode ? '#d1d5db' : '#374151' }}>
+                  <p>
+                    This application's backend is deployed on <strong>Render</strong> using the free tier plan.
+                  </p>
+                  <p>
+                    <strong>Note:</strong> The backend may be in <strong>deep sleep mode</strong> after periods of inactivity. 
+                    If content generation fails, it could be due to:
+                  </p>
+                  <ul className="list-disc list-inside ml-2 space-y-1">
+                    <li>Backend waking up from deep sleep (first request may take 30-60 seconds)</li>
+                    <li>Heavy load on the AI model</li>
+                    <li>Network connectivity issues</li>
+                  </ul>
+                  <p className="mt-3 font-semibold" style={{ color: darkMode ? '#60a5fa' : '#2563eb' }}>
+                    💡 If generation fails, please wait about 1 minute and try again.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
 
         {error && (
           <div className="card mb-6 border-2" style={{
