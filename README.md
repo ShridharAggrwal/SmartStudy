@@ -444,7 +444,7 @@ MIT License - feel free to use this project for learning and development.
 
 ## 🎥 Demo Video
 
-[Link to demo video - max 1 minute]
+Link to demo video - https://drive.google.com/file/d/1PqJ1Bl_X2VT_tl0VfOSz5MHQtUsb7ZGT/view?usp=sharing
 
 The demo showcases:
 - Topic input and submission
