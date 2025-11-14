@@ -11,23 +11,20 @@ export const errorHandler = (err, req, res, next) => {
     return next(err);
   }
 
-  // Ensure CORS headers are set on error responses
+  // Set CORS headers on error responses only if origin is present
   const origin = req.headers.origin;
-  const allowedOrigins = [
-    "https://smartstudying.netlify.app",
-    "http://localhost:5173"
-  ];
-  
-  if (!origin || allowedOrigins.includes(origin) || origin?.includes('localhost') || origin?.includes('127.0.0.1')) {
-    // Use specific origin when credentials are used
-    if (origin) {
+  if (origin) {
+    const allowedOrigins = [
+      "https://smartstudying.netlify.app",
+      "http://localhost:5173"
+    ];
+    
+    if (allowedOrigins.includes(origin) || origin.includes('localhost') || origin.includes('127.0.0.1')) {
       res.header('Access-Control-Allow-Origin', origin);
       res.header('Access-Control-Allow-Credentials', 'true');
-    } else {
-      res.header('Access-Control-Allow-Origin', '*');
+      res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     }
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   }
 
   // Default error response
@@ -42,23 +39,20 @@ export const errorHandler = (err, req, res, next) => {
  * 404 Not Found handler
  */
 export const notFoundHandler = (req, res) => {
-  // Ensure CORS headers are set on 404 responses
+  // Set CORS headers on 404 responses only if origin is present
   const origin = req.headers.origin;
-  const allowedOrigins = [
-    "https://smartstudying.netlify.app",
-    "http://localhost:5173"
-  ];
-  
-  if (!origin || allowedOrigins.includes(origin) || origin?.includes('localhost') || origin?.includes('127.0.0.1')) {
-    // Use specific origin when credentials are used
-    if (origin) {
+  if (origin) {
+    const allowedOrigins = [
+      "https://smartstudying.netlify.app",
+      "http://localhost:5173"
+    ];
+    
+    if (allowedOrigins.includes(origin) || origin.includes('localhost') || origin.includes('127.0.0.1')) {
       res.header('Access-Control-Allow-Origin', origin);
       res.header('Access-Control-Allow-Credentials', 'true');
-    } else {
-      res.header('Access-Control-Allow-Origin', '*');
+      res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     }
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   }
 
   res.status(404).json({
