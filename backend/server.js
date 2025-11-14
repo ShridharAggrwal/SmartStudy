@@ -26,7 +26,16 @@ try {
 }
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    "https://smartstudying.netlify.app",
+    "http://localhost:5173"
+  ],
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+}));
+
 app.use(express.json());
 
 // Request logging middleware
